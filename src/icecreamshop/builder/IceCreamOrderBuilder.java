@@ -23,7 +23,7 @@ public class IceCreamOrderBuilder {
     }
 
     public IceCreamOrderBuilder setServingStyle(String servingStyle) {
-        if (servingStyle == null) {
+        if (servingStyle == null || servingStyle.trim().isEmpty()) {
             return this;
         }
         String normalized = servingStyle.trim();

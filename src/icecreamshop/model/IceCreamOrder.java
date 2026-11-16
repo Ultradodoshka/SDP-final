@@ -77,4 +77,18 @@ public class IceCreamOrder {
                 includeSpoon ? "Yes" : "No",
                 getTotalCost());
     }
+
+    @Override
+    public String toString() {
+        return "========================================\n" +
+                "Order ID:      " + orderId + "\n" +
+                "Customer:      " + customerName + "\n" +
+                "Item:          " + (iceCream != null ? iceCream.getDescription() : "None") + "\n" +
+                "Serving Style: " + servingStyle + "\n" +
+                "Takeaway:      " + (takeaway ? "Yes" : "No") + "\n" +
+                "Spoon:         " + (includeSpoon ? "Included" : "No") + "\n" +
+                "----------------------------------------\n" +
+                "TOTAL:         " + String.format("%.2f KZT", getTotalCost()) + "\n" +
+                "========================================";
+    }
 }

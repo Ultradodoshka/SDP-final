@@ -1,21 +1,12 @@
 package icecreamshop.facade;
 
-import icecreamshop.builder.IceCreamOrderBuilder;
-import icecreamshop.decorator.ChocolateSyrupDecorator;
-import icecreamshop.decorator.CrushedNutsDecorator;
-import icecreamshop.decorator.SprinklesDecorator;
-import icecreamshop.decorator.WaffleConeDecorator;
-import icecreamshop.factory.ChocolateCreator;
-import icecreamshop.factory.IceCreamCreator;
-import icecreamshop.factory.StrawberryCreator;
-import icecreamshop.factory.VanillaCreator;
-import icecreamshop.model.IceCream;
-import icecreamshop.model.IceCreamOrder;
-import icecreamshop.payment.CardPayment;
-import icecreamshop.payment.CashPayment;
-import icecreamshop.payment.ExternalKaspiPayService;
-import icecreamshop.payment.KaspiPayAdapter;
-import icecreamshop.payment.PaymentStrategy;
+
+import icecreamshop.builder.*;
+import icecreamshop.decorator.*;
+import icecreamshop.factory.*;
+import icecreamshop.model.*;
+import icecreamshop.payment.*;
+
 import java.util.List;
 
 public class IceCreamShopFacade {
@@ -70,9 +61,8 @@ public class IceCreamShopFacade {
             return false;
         }
         System.out.println("[Strategy Context] Processing payment via: "
-                + paymentStrategy.getClass().getSimpleName());
-        paymentStrategy.pay(amount);
-        return true;
+                + paymentStrategy.getMethodName());
+        return paymentStrategy.pay(amount);
     }
 
     public IceCreamOrder placeFullOrder(String customerName,
@@ -157,13 +147,14 @@ public class IceCreamShopFacade {
                 return new CashPayment();
             case "2":
             case "card":
-                return new CardPayment();
+                return new CardPayment("4242");
             case "3":
             case "kaspi":
             case "kaspi pay":
-                return new KaspiPayAdapter(new ExternalKaspiPayService());
+                return new KaspiPayAdapter(new ExternalKaspiPayService(), "ASTANA-ICECREAM-01");
             default:
                 throw new IllegalArgumentException("Unknown payment method: " + paymentChoice);
         }
     }
 }
+
