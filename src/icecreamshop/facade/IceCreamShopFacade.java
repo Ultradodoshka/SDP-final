@@ -70,8 +70,9 @@ public class IceCreamShopFacade {
             return false;
         }
         System.out.println("[Strategy Context] Processing payment via: "
-                + paymentStrategy.getMethodName());
-        return paymentStrategy.pay(amount);
+                + paymentStrategy.getClass().getSimpleName());
+        paymentStrategy.pay(amount);
+        return true;
     }
 
     public IceCreamOrder placeFullOrder(String customerName,
@@ -156,11 +157,11 @@ public class IceCreamShopFacade {
                 return new CashPayment();
             case "2":
             case "card":
-                return new CardPayment("4242");
+                return new CardPayment();
             case "3":
             case "kaspi":
             case "kaspi pay":
-                return new KaspiPayAdapter(new ExternalKaspiPayService(), "ASTANA-ICECREAM-01");
+                return new KaspiPayAdapter(new ExternalKaspiPayService());
             default:
                 throw new IllegalArgumentException("Unknown payment method: " + paymentChoice);
         }
